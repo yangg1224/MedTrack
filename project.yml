@@ -1,0 +1,32 @@
+name: MedTrack
+options:
+  bundleIdPrefix: com.medtrack
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16"
+  createIntermediateGroups: true
+
+targets:
+  MedTrack:
+    type: application
+    platform: iOS
+    sources:
+      - path: MedTrack
+        excludes:
+          - "**/*.md"
+    info:
+      path: MedTrack/Info.plist
+      properties:
+        CFBundleDisplayName: MedTrack
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen:
+          UIColorName: ""
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSUserNotificationsUsageDescription: "MedTrack sends reminders when it's time to take your medication."
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.medtrack.app
+      SWIFT_VERSION: "5.9"
+      IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+      DEVELOPMENT_TEAM: ""
