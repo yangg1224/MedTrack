@@ -16,18 +16,22 @@
 		3037C37715040261BDBA34FF /* DayAdherenceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EA7D6D31D28B329FB251F1 /* DayAdherenceRow.swift */; };
 		369F8419877575450820D7DB /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6325D3F25940AD27977BF3 /* TodayViewModel.swift */; };
 		54F1AD5D26AE02A61C28BF09 /* MedicationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A093E68C6ED0C871FF13A9 /* MedicationRowView.swift */; };
+		5E70D045333462D789D4E85C /* OpenFDAResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */; };
 		7779B75FF1CBDA9F6275ECA8 /* DoseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E6CC7FD15D6FF1811FFB9 /* DoseRecord.swift */; };
 		9276F5AEB3FB00F019709E5A /* MedicationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4D5E990E61C86F36979C1 /* MedicationStore.swift */; };
+		9643D8E847A0F44813E9A7B2 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0186FD8DA32B437E11877F /* BarcodeScannerView.swift */; };
 		AB6529A0A65AD3DD847C4987 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03BCBFC900D7A41F5565F5D /* Medication.swift */; };
 		ABC0E880B49F9496CFA420E9 /* MedTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515BFA996AAD8E7B9F071FEC /* MedTrackApp.swift */; };
 		B1E532A6ED31F750E0CDEDE3 /* MedicationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B779A39A3CACADFC6EB1FCB1 /* MedicationListView.swift */; };
 		B43D163EAEE3EA922639A043 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABB186D5CB212E74CEC7B7B /* HistoryViewModel.swift */; };
 		BA5BE1C9344F4F6C6F15C823 /* DoseRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053DC31614201014282B56B2 /* DoseRowView.swift */; };
 		DDBFDC6C3C24DD333D37CDA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A69828DD6B8B7189EB0BC1 /* ContentView.swift */; };
+		E0C1857D6CC765A5029F91E8 /* DrugLookupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA020779FF4B0F6121F44324 /* DrugLookupService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		053DC31614201014282B56B2 /* DoseRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseRowView.swift; sourceTree = "<group>"; };
+		1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFDAResponse.swift; sourceTree = "<group>"; };
 		23AF35E7828CD8E4E8661976 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		27F4D5E990E61C86F36979C1 /* MedicationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationStore.swift; sourceTree = "<group>"; };
 		2ABB186D5CB212E74CEC7B7B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
@@ -45,6 +49,8 @@
 		C0A69828DD6B8B7189EB0BC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C61E1009E7EFB9AE7D1C6634 /* MedicationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationFormView.swift; sourceTree = "<group>"; };
 		C7A118AB60967F2AB77BEB11 /* AccessibilityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityConstants.swift; sourceTree = "<group>"; };
+		CA020779FF4B0F6121F44324 /* DrugLookupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugLookupService.swift; sourceTree = "<group>"; };
+		DB0186FD8DA32B437E11877F /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		F4F0B0E455AEA6B83B8D9576 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,11 +94,20 @@
 		511D03CDD8B28E3F0306AA69 /* Medications */ = {
 			isa = PBXGroup;
 			children = (
+				DB0186FD8DA32B437E11877F /* BarcodeScannerView.swift */,
 				C61E1009E7EFB9AE7D1C6634 /* MedicationFormView.swift */,
 				B779A39A3CACADFC6EB1FCB1 /* MedicationListView.swift */,
 				37A093E68C6ED0C871FF13A9 /* MedicationRowView.swift */,
 			);
 			path = Medications;
+			sourceTree = "<group>";
+		};
+		A818BC0AE53EC991B7E40944 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CA020779FF4B0F6121F44324 /* DrugLookupService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		A83C725886FAC33F98639D51 /* Products */ = {
@@ -119,6 +134,7 @@
 				515BFA996AAD8E7B9F071FEC /* MedTrackApp.swift */,
 				CD892FBB18F1CC553D93FBE1 /* Models */,
 				AE6923BF14497AFFC95EF99D /* Notifications */,
+				A818BC0AE53EC991B7E40944 /* Services */,
 				D6A853ED12E90F103A98C32C /* Utilities */,
 				235F236E1A6A041321EF77F8 /* ViewModels */,
 				E655C2856A29E210F0C01802 /* Views */,
@@ -131,6 +147,7 @@
 			children = (
 				B56E6CC7FD15D6FF1811FFB9 /* DoseRecord.swift */,
 				C03BCBFC900D7A41F5565F5D /* Medication.swift */,
+				1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -213,11 +230,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CF7CDBBB79F4F5676FBA23F /* AccessibilityConstants.swift in Sources */,
+				9643D8E847A0F44813E9A7B2 /* BarcodeScannerView.swift in Sources */,
 				DDBFDC6C3C24DD333D37CDA3 /* ContentView.swift in Sources */,
 				188F3EB28D9335570D661601 /* DateHelpers.swift in Sources */,
 				3037C37715040261BDBA34FF /* DayAdherenceRow.swift in Sources */,
 				7779B75FF1CBDA9F6275ECA8 /* DoseRecord.swift in Sources */,
 				BA5BE1C9344F4F6C6F15C823 /* DoseRowView.swift in Sources */,
+				E0C1857D6CC765A5029F91E8 /* DrugLookupService.swift in Sources */,
 				1F387B8E475EB6E1F0091B85 /* HistoryView.swift in Sources */,
 				B43D163EAEE3EA922639A043 /* HistoryViewModel.swift in Sources */,
 				ABC0E880B49F9496CFA420E9 /* MedTrackApp.swift in Sources */,
@@ -227,6 +246,7 @@
 				54F1AD5D26AE02A61C28BF09 /* MedicationRowView.swift in Sources */,
 				9276F5AEB3FB00F019709E5A /* MedicationStore.swift in Sources */,
 				0257ADF3D4F53B8BADB83481 /* NotificationManager.swift in Sources */,
+				5E70D045333462D789D4E85C /* OpenFDAResponse.swift in Sources */,
 				2FF01D773AD0D6276104B8C8 /* TodayView.swift in Sources */,
 				369F8419877575450820D7DB /* TodayViewModel.swift in Sources */,
 			);

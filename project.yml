@@ -24,6 +24,7 @@ targets:
           UIColorName: ""
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: "MedTrack uses the camera to scan medicine package barcodes."
         NSUserNotificationsUsageDescription: "MedTrack sends reminders when it's time to take your medication."
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.medtrack.app

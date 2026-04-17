@@ -20,6 +20,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSCameraUsageDescription</key>
+	<string>MedTrack uses the camera to scan medicine package barcodes.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>MedTrack sends reminders when it's time to take your medication.</string>
 	<key>UILaunchScreen</key>
