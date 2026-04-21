@@ -8,16 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		00E866421682055425FC0DCD /* MedicationFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61E1009E7EFB9AE7D1C6634 /* MedicationFormView.swift */; };
+		0139AE4515CE7523987568A7 /* PillBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66F0BF14CDD87285B3A2499 /* PillBoxView.swift */; };
 		0257ADF3D4F53B8BADB83481 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D580A9EAD694DC8314329C2 /* NotificationManager.swift */; };
+		0674A2E1618081064AF9BA33 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C7ADAC5BF0D246A3C4DD43 /* DesignSystem.swift */; };
+		129959EB4EA96E3A0B7BC6F5 /* ReminderBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F41E7289216C42CA06DDCB /* ReminderBannerView.swift */; };
 		188F3EB28D9335570D661601 /* DateHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3779C311B95E294FC87DC5 /* DateHelpers.swift */; };
 		1CF7CDBBB79F4F5676FBA23F /* AccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A118AB60967F2AB77BEB11 /* AccessibilityConstants.swift */; };
 		1F387B8E475EB6E1F0091B85 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A970EB64F733124CE2FE948C /* HistoryView.swift */; };
 		2FF01D773AD0D6276104B8C8 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F0B0E455AEA6B83B8D9576 /* TodayView.swift */; };
 		3037C37715040261BDBA34FF /* DayAdherenceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EA7D6D31D28B329FB251F1 /* DayAdherenceRow.swift */; };
 		369F8419877575450820D7DB /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6325D3F25940AD27977BF3 /* TodayViewModel.swift */; };
+		3FDBAA2B02ED2DA525A5D4A8 /* PillBoxState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69C3F40E0EC4315F08E427 /* PillBoxState.swift */; };
 		54F1AD5D26AE02A61C28BF09 /* MedicationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A093E68C6ED0C871FF13A9 /* MedicationRowView.swift */; };
 		5E70D045333462D789D4E85C /* OpenFDAResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */; };
 		7779B75FF1CBDA9F6275ECA8 /* DoseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E6CC7FD15D6FF1811FFB9 /* DoseRecord.swift */; };
+		81203336C487EA84FA9EA1E6 /* DispenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8391DFF969BEAE5C3E854 /* DispenseView.swift */; };
 		9276F5AEB3FB00F019709E5A /* MedicationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4D5E990E61C86F36979C1 /* MedicationStore.swift */; };
 		9643D8E847A0F44813E9A7B2 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0186FD8DA32B437E11877F /* BarcodeScannerView.swift */; };
 		AB6529A0A65AD3DD847C4987 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03BCBFC900D7A41F5565F5D /* Medication.swift */; };
@@ -36,20 +41,25 @@
 		27F4D5E990E61C86F36979C1 /* MedicationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationStore.swift; sourceTree = "<group>"; };
 		2ABB186D5CB212E74CEC7B7B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		37A093E68C6ED0C871FF13A9 /* MedicationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationRowView.swift; sourceTree = "<group>"; };
+		37E8391DFF969BEAE5C3E854 /* DispenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispenseView.swift; sourceTree = "<group>"; };
 		3D580A9EAD694DC8314329C2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		3D6325D3F25940AD27977BF3 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		41C6DC7522BD7409D3A3C4CE /* MedTrack.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MedTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		515BFA996AAD8E7B9F071FEC /* MedTrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedTrackApp.swift; sourceTree = "<group>"; };
+		59F41E7289216C42CA06DDCB /* ReminderBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderBannerView.swift; sourceTree = "<group>"; };
 		95EA7D6D31D28B329FB251F1 /* DayAdherenceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAdherenceRow.swift; sourceTree = "<group>"; };
 		A970EB64F733124CE2FE948C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		AF69C3F40E0EC4315F08E427 /* PillBoxState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillBoxState.swift; sourceTree = "<group>"; };
 		B56E6CC7FD15D6FF1811FFB9 /* DoseRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseRecord.swift; sourceTree = "<group>"; };
 		B779A39A3CACADFC6EB1FCB1 /* MedicationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationListView.swift; sourceTree = "<group>"; };
 		BC3779C311B95E294FC87DC5 /* DateHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelpers.swift; sourceTree = "<group>"; };
 		C03BCBFC900D7A41F5565F5D /* Medication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medication.swift; sourceTree = "<group>"; };
 		C0A69828DD6B8B7189EB0BC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C61E1009E7EFB9AE7D1C6634 /* MedicationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationFormView.swift; sourceTree = "<group>"; };
+		C66F0BF14CDD87285B3A2499 /* PillBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillBoxView.swift; sourceTree = "<group>"; };
 		C7A118AB60967F2AB77BEB11 /* AccessibilityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityConstants.swift; sourceTree = "<group>"; };
 		CA020779FF4B0F6121F44324 /* DrugLookupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrugLookupService.swift; sourceTree = "<group>"; };
+		D8C7ADAC5BF0D246A3C4DD43 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		DB0186FD8DA32B437E11877F /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		F4F0B0E455AEA6B83B8D9576 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,7 +68,9 @@
 		00020C6DDCA918582623F10A /* Today */ = {
 			isa = PBXGroup;
 			children = (
+				37E8391DFF969BEAE5C3E854 /* DispenseView.swift */,
 				053DC31614201014282B56B2 /* DoseRowView.swift */,
+				59F41E7289216C42CA06DDCB /* ReminderBannerView.swift */,
 				F4F0B0E455AEA6B83B8D9576 /* TodayView.swift */,
 			);
 			path = Today;
@@ -80,6 +92,14 @@
 				B99D88BC8DEC769208376E80 /* MedTrack */,
 				A83C725886FAC33F98639D51 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		3CDA29C017A32278BDDB9263 /* PillBox */ = {
+			isa = PBXGroup;
+			children = (
+				C66F0BF14CDD87285B3A2499 /* PillBoxView.swift */,
+			);
+			path = PillBox;
 			sourceTree = "<group>";
 		};
 		44B9369EE14D5195825ED1A9 /* History */ = {
@@ -148,6 +168,7 @@
 				B56E6CC7FD15D6FF1811FFB9 /* DoseRecord.swift */,
 				C03BCBFC900D7A41F5565F5D /* Medication.swift */,
 				1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */,
+				AF69C3F40E0EC4315F08E427 /* PillBoxState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -157,6 +178,7 @@
 			children = (
 				C7A118AB60967F2AB77BEB11 /* AccessibilityConstants.swift */,
 				BC3779C311B95E294FC87DC5 /* DateHelpers.swift */,
+				D8C7ADAC5BF0D246A3C4DD43 /* DesignSystem.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -166,6 +188,7 @@
 			children = (
 				44B9369EE14D5195825ED1A9 /* History */,
 				511D03CDD8B28E3F0306AA69 /* Medications */,
+				3CDA29C017A32278BDDB9263 /* PillBox */,
 				00020C6DDCA918582623F10A /* Today */,
 			);
 			path = Views;
@@ -234,6 +257,8 @@
 				DDBFDC6C3C24DD333D37CDA3 /* ContentView.swift in Sources */,
 				188F3EB28D9335570D661601 /* DateHelpers.swift in Sources */,
 				3037C37715040261BDBA34FF /* DayAdherenceRow.swift in Sources */,
+				0674A2E1618081064AF9BA33 /* DesignSystem.swift in Sources */,
+				81203336C487EA84FA9EA1E6 /* DispenseView.swift in Sources */,
 				7779B75FF1CBDA9F6275ECA8 /* DoseRecord.swift in Sources */,
 				BA5BE1C9344F4F6C6F15C823 /* DoseRowView.swift in Sources */,
 				E0C1857D6CC765A5029F91E8 /* DrugLookupService.swift in Sources */,
@@ -247,6 +272,9 @@
 				9276F5AEB3FB00F019709E5A /* MedicationStore.swift in Sources */,
 				0257ADF3D4F53B8BADB83481 /* NotificationManager.swift in Sources */,
 				5E70D045333462D789D4E85C /* OpenFDAResponse.swift in Sources */,
+				3FDBAA2B02ED2DA525A5D4A8 /* PillBoxState.swift in Sources */,
+				0139AE4515CE7523987568A7 /* PillBoxView.swift in Sources */,
+				129959EB4EA96E3A0B7BC6F5 /* ReminderBannerView.swift in Sources */,
 				2FF01D773AD0D6276104B8C8 /* TodayView.swift in Sources */,
 				369F8419877575450820D7DB /* TodayViewModel.swift in Sources */,
 			);

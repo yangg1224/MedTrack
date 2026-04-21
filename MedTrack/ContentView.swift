@@ -6,39 +6,37 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \Medication.name) private var medications: [Medication]
 
+    @State private var selectedTab = 0
+    @State private var pillBox = PillBoxState()
+
     var body: some View {
-        TabView {
-            TodayView()
-                .tabItem {
-                    Label("Today", systemImage: "checkmark.circle.fill")
-                }
+        TabView(selection: $selectedTab) {
+            TodayView(selectedTab: $selectedTab)
+                .environment(pillBox)
+                .tabItem { Label("Today", systemImage: "house.fill") }
+                .tag(0)
 
             NavigationStack {
                 MedicationListView()
             }
-            .tabItem {
-                Label("My Meds", systemImage: "pills.fill")
-            }
+            .tabItem { Label("Schedule", systemImage: "calendar") }
+            .tag(1)
 
-            NavigationStack {
-                HistoryView()
-            }
-            .tabItem {
-                Label("History", systemImage: "calendar")
-            }
+            PillBoxView()
+                .environment(pillBox)
+                .tabItem { Label("PillBox", systemImage: "cross.case.fill") }
+                .tag(2)
         }
+        .tint(Color.dsAccent)
         .onAppear {
             NotificationManager.shared.requestPermission()
             rescheduleNotifications()
         }
         .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
-                rescheduleNotifications()
-            }
+            if newPhase == .active { rescheduleNotifications() }
         }
     }
 
-    /// Safety-net: re-schedules notifications for all active medications on every app open.
     private func rescheduleNotifications() {
         let store = MedicationStore(context: context)
         store.rescheduleAllNotifications(medications: medications)
