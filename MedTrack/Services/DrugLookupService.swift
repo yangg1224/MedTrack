@@ -28,7 +28,7 @@ enum DrugLookupService {
 
     // MARK: - Public
 
-    /// Looks up drug info from a raw barcode string (UPC-A / EAN-13).
+    /// Looks up drug info from a raw barcode string (UPC-A / EAN-13 / GS1 DataMatrix / GS1-128).
     static func lookup(barcode: String) async throws -> DrugInfo {
         let ndc = try extractNDC(from: barcode)
         return try await fetchFromOpenFDA(ndc: ndc)
@@ -36,24 +36,21 @@ enum DrugLookupService {
 
     // MARK: - NDC Extraction
 
-    /// Converts a 12-digit UPC-A (or 13-digit EAN-13) to candidate NDC strings.
-    /// UPC-A: prepend "0" → EAN-13 on iOS. Strip leading "0" or "3", strip check digit.
+    /// Converts a barcode string to a 10-digit raw NDC string.
+    /// Supports GS1 Application Identifier strings (DataMatrix, GS1-128) and
+    /// plain UPC-A / EAN-13 barcodes.
     static func extractNDC(from barcode: String) throws -> String {
+        // 1. Try GS1 Application Identifier parsing (DataMatrix, GS1-128 barcodes)
+        if let ndc = GS1Parser.extractNDC(from: barcode) { return ndc }
+
+        // 2. Fallback: plain UPC-A / EAN-13
         var digits = barcode.filter(\.isNumber)
-
-        // EAN-13 from iOS AVFoundation adds a leading "0" to UPC-A.
-        // Pharmaceutical UPC-A starts with "3" (or "03" in EAN-13).
         if digits.count == 13 && digits.hasPrefix("0") {
-            digits = String(digits.dropFirst()) // strip the leading 0 → 12-digit UPC-A
+            digits = String(digits.dropFirst())
         }
-
         guard digits.count == 12 else { throw DrugLookupError.invalidBarcode }
-
-        // 12-digit UPC-A for drugs: first digit is "3", last digit is check digit.
-        // Middle 10 digits are the NDC (without formatting dashes).
-        let ndcDigits = String(digits.dropFirst().dropLast()) // 10 raw digits
+        let ndcDigits = String(digits.dropFirst().dropLast())
         guard ndcDigits.count == 10 else { throw DrugLookupError.invalidBarcode }
-
         return ndcDigits
     }
 
@@ -103,7 +100,62 @@ enum DrugLookupService {
             } catch { continue }
         }
 
+        // After both openFDA loops fail, try RxNorm
+        if let info = try? await fetchFromRxNorm(ndc: ndc) {
+            return info
+        }
         throw DrugLookupError.notFound
+    }
+
+    // MARK: - RxNorm Fallback
+
+    private static func fetchFromRxNorm(ndc: String) async throws -> DrugInfo {
+        let candidates = formatNDCCandidates(from: ndc) + formatProductNDCCandidates(from: ndc)
+        for formatted in candidates {
+            let encoded = formatted.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? formatted
+            let urlString = "https://rxnav.nlm.nih.gov/REST/ndcProperties.json?ndc=\(encoded)"
+            guard let url = URL(string: urlString) else { continue }
+            do {
+                let (data, response) = try await URLSession.shared.data(from: url)
+                guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { continue }
+                let decoded = try JSONDecoder().decode(RxNormNDCResponse.self, from: data)
+                if let prop = decoded.ndcPropertyList?.ndcProperty?.first {
+                    return parseRxNormInfo(from: prop)
+                }
+            } catch { continue }
+        }
+        throw DrugLookupError.notFound
+    }
+
+    private static func parseRxNormInfo(from prop: RxNormNDCResponse.NDCProperty) -> DrugInfo {
+        // labeledName example: "Metformin Hydrochloride 500 MG Oral Tablet"
+        let labeledName = prop.ndcItem?.labeledName ?? ""
+
+        // Try to split into name and strength parts
+        // Pattern: everything up to the first digit = name, digits + unit = dosage
+        var name = labeledName
+        var dosage = ""
+        var unit = "mg"
+
+        if let strengthRange = labeledName.range(of: #"\d"#, options: .regularExpression) {
+            let namePart = String(labeledName[..<strengthRange.lowerBound])
+                .trimmingCharacters(in: .whitespaces)
+            let strengthPart = String(labeledName[strengthRange.lowerBound...])
+
+            if !namePart.isEmpty { name = namePart.capitalized }
+
+            // Parse "500 MG Oral Tablet" → dosage "500", unit "mg"
+            let words = strengthPart.components(separatedBy: " ")
+            if let first = words.first { dosage = first }
+            if words.count > 1 {
+                let rawUnit = words[1].lowercased()
+                unit = mapUnit(rawUnit)
+            }
+        } else {
+            name = labeledName.capitalized
+        }
+
+        return DrugInfo(name: name, dosage: dosage, unit: unit, dosageForm: "")
     }
 
     // MARK: - NDC Formatting
@@ -182,5 +234,65 @@ enum DrugLookupService {
         case "patch":           return "patch"
         default:                return "mg"
         }
+    }
+}
+
+// MARK: - GS1 Application Identifier Parser
+
+private enum GS1Parser {
+    /// Extracts a 10-digit raw NDC string from a GS1-encoded barcode string.
+    /// Handles GS1 DataMatrix and GS1-128 barcode formats.
+    ///
+    /// GS1 barcode data example: "010303850218282617271231102L2J"
+    ///   AI (01) → GTIN-14: "03038502182826"
+    ///   AI (17) → expiry date: "271231"
+    ///   AI (10) → lot: "2L2J"
+    ///
+    /// GTIN-14 structure for US pharma: "00" + "3" + NDC(10) + checkDigit
+    ///   NDC = gtin14[3..<13] (positions 3–12 inclusive)
+    static func extractNDC(from barcodeString: String) -> String? {
+        guard let gtin14 = extractGTIN14(from: barcodeString) else { return nil }
+        return ndcFromGTIN14(gtin14)
+    }
+
+    /// Finds the AI (01) GTIN-14 value in a GS1 barcode string.
+    static func extractGTIN14(from barcodeString: String) -> String? {
+        // Strip optional GS1 symbol identifier prefix: ]d2 (DataMatrix), ]C1 (GS1-128), ]Q3 (QR)
+        var data = barcodeString
+        if data.hasPrefix("]"), data.count > 3 {
+            data = String(data.dropFirst(3))
+        }
+
+        // Replace FNC1 separator (ASCII 29, \u001d) with a marker for scanning
+        // FNC1 delimiters appear between variable-length AI values
+        let fnc1: Character = "\u{001d}"
+
+        // Split on FNC1 to handle variable-length AI fields before AI (01)
+        let segments = data.split(separator: fnc1, omittingEmptySubsequences: false).map(String.init)
+
+        for segment in segments {
+            // AI (01) is fixed-length: "01" + 14 digits = 16 chars minimum in this segment
+            if segment.hasPrefix("01"), segment.count >= 16 {
+                let afterAI = String(segment.dropFirst(2)) // drop "01"
+                let gtin = String(afterAI.prefix(14))
+                if gtin.count == 14, gtin.allSatisfy(\.isNumber) {
+                    return gtin
+                }
+            }
+        }
+        return nil
+    }
+
+    /// Converts a 14-digit GTIN to a 10-digit raw NDC string.
+    /// US pharma GTIN-14 layout: [0][0][3][NDC×10][checkDigit]
+    static func ndcFromGTIN14(_ gtin14: String) -> String? {
+        guard gtin14.count == 14, gtin14.allSatisfy(\.isNumber) else { return nil }
+        // Drop indicator digit + EAN prefix + pharma prefix (first 3) and check digit (last 1)
+        let start = gtin14.index(gtin14.startIndex, offsetBy: 3)
+        let end = gtin14.index(gtin14.endIndex, offsetBy: -1)
+        guard start < end else { return nil }
+        let ndc = String(gtin14[start..<end])
+        guard ndc.count == 10 else { return nil }
+        return ndc
     }
 }

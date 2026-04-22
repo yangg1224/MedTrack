@@ -173,7 +173,7 @@ final class BarcodeCameraViewController: UIViewController, AVCaptureMetadataOutp
 
         // EAN-13 covers UPC-A with a leading zero prepended by iOS
         output.setMetadataObjectsDelegate(self, queue: .main)
-        output.metadataObjectTypes = [.ean13, .upce, .code128]
+        output.metadataObjectTypes = [.ean13, .upce, .code128, .dataMatrix, .pdf417]
 
         let preview = AVCaptureVideoPreviewLayer(session: session)
         preview.videoGravity = .resizeAspectFill
