@@ -21,6 +21,7 @@
 		3FDBAA2B02ED2DA525A5D4A8 /* PillBoxState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69C3F40E0EC4315F08E427 /* PillBoxState.swift */; };
 		54F1AD5D26AE02A61C28BF09 /* MedicationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A093E68C6ED0C871FF13A9 /* MedicationRowView.swift */; };
 		5E23788220A44617B55CFDDB /* RxNormResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6E50171FBD4471B781F80B /* RxNormResponse.swift */; };
+		A1B2C3D4E5F6789012345678 /* UPCItemDBResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F678901234567890 /* UPCItemDBResponse.swift */; };
 		5E70D045333462D789D4E85C /* OpenFDAResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */; };
 		7779B75FF1CBDA9F6275ECA8 /* DoseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E6CC7FD15D6FF1811FFB9 /* DoseRecord.swift */; };
 		81203336C487EA84FA9EA1E6 /* DispenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8391DFF969BEAE5C3E854 /* DispenseView.swift */; };
@@ -39,6 +40,7 @@
 		053DC31614201014282B56B2 /* DoseRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseRowView.swift; sourceTree = "<group>"; };
 		1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFDAResponse.swift; sourceTree = "<group>"; };
 		2E6E50171FBD4471B781F80B /* RxNormResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNormResponse.swift; sourceTree = "<group>"; };
+		B2C3D4E5F678901234567890 /* UPCItemDBResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCItemDBResponse.swift; sourceTree = "<group>"; };
 		23AF35E7828CD8E4E8661976 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		27F4D5E990E61C86F36979C1 /* MedicationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationStore.swift; sourceTree = "<group>"; };
 		2ABB186D5CB212E74CEC7B7B /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				1D5D0EA095EF66B334A12BE7 /* OpenFDAResponse.swift */,
 				AF69C3F40E0EC4315F08E427 /* PillBoxState.swift */,
 				2E6E50171FBD4471B781F80B /* RxNormResponse.swift */,
+				B2C3D4E5F678901234567890 /* UPCItemDBResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				9276F5AEB3FB00F019709E5A /* MedicationStore.swift in Sources */,
 				0257ADF3D4F53B8BADB83481 /* NotificationManager.swift in Sources */,
 				5E23788220A44617B55CFDDB /* RxNormResponse.swift in Sources */,
+				A1B2C3D4E5F6789012345678 /* UPCItemDBResponse.swift in Sources */,
 				5E70D045333462D789D4E85C /* OpenFDAResponse.swift in Sources */,
 				3FDBAA2B02ED2DA525A5D4A8 /* PillBoxState.swift in Sources */,
 				0139AE4515CE7523987568A7 /* PillBoxView.swift in Sources */,

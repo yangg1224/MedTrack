@@ -29,9 +29,17 @@ enum DrugLookupService {
     // MARK: - Public
 
     /// Looks up drug info from a raw barcode string (UPC-A / EAN-13 / GS1 DataMatrix / GS1-128).
+    /// Tries pharmaceutical databases first (openFDA → RxNorm), then falls back to the
+    /// general UPCitemdb product database to cover dietary supplements and OTC vitamins.
     static func lookup(barcode: String) async throws -> DrugInfo {
         let ndc = try extractNDC(from: barcode)
-        return try await fetchFromOpenFDA(ndc: ndc)
+        do {
+            return try await fetchFromOpenFDA(ndc: ndc)
+        } catch DrugLookupError.notFound {
+            // Pharmaceutical lookup found nothing — try general product database.
+            // This covers dietary supplements, vitamins, and OTC products not in FDA databases.
+            return try await fetchFromUPCItemDB(barcode: barcode)
+        }
     }
 
     // MARK: - NDC Extraction
@@ -156,6 +164,64 @@ enum DrugLookupService {
         }
 
         return DrugInfo(name: name, dosage: dosage, unit: unit, dosageForm: "")
+    }
+
+    // MARK: - UPCitemdb Fallback (supplements, vitamins, OTC)
+
+    /// Queries UPCitemdb for general consumer products not covered by pharmaceutical databases.
+    /// Uses the free trial endpoint (no API key, 100 req/day).
+    private static func fetchFromUPCItemDB(barcode: String) async throws -> DrugInfo {
+        // Normalise to 12-digit UPC-A for UPCitemdb
+        var upc = barcode.filter(\.isNumber)
+        if upc.count == 13 && upc.hasPrefix("0") {
+            upc = String(upc.dropFirst())
+        }
+        // For GS1 barcodes: extract GTIN-14 UPC-A equivalent (positions 1–12)
+        if upc.count == 14 {
+            upc = String(upc.dropFirst().dropLast())
+        }
+
+        let urlString = "https://api.upcitemdb.com/prod/trial/lookup?upc=\(upc)"
+        guard let url = URL(string: urlString) else { throw DrugLookupError.notFound }
+
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+            throw DrugLookupError.notFound
+        }
+
+        let decoded = try JSONDecoder().decode(UPCItemDBResponse.self, from: data)
+        guard let item = decoded.items?.first else { throw DrugLookupError.notFound }
+
+        return parseProductItem(item)
+    }
+
+    private static func parseProductItem(_ item: UPCItem) -> DrugInfo {
+        let rawTitle = item.title ?? item.brand ?? ""
+        guard !rawTitle.isEmpty else {
+            return DrugInfo(name: "Unknown Product", dosage: "", unit: "mg", dosageForm: "")
+        }
+
+        // Find a dosage pattern like "20 mg", "500mg", "1000 IU", "400 mcg"
+        let pattern = #"(\d+(?:\.\d+)?)\s*(mg|mcg|iu|µg|ug|g\b|ml)"#
+        var name = rawTitle
+        var dosage = ""
+        var unit = "mg"
+
+        if let matchRange = rawTitle.range(of: pattern, options: [.regularExpression, .caseInsensitive]) {
+            // Name = everything before the dosage number
+            let namePart = String(rawTitle[..<matchRange.lowerBound]).trimmingCharacters(in: .whitespaces)
+            if !namePart.isEmpty { name = namePart }
+
+            // Split matched string into number + unit (handles "20mg" and "20 mg")
+            let matchStr = String(rawTitle[matchRange])
+            let numStr = matchStr.prefix(while: { $0.isNumber || $0 == "." })
+            let unitStr = matchStr.drop(while: { $0.isNumber || $0 == "." })
+                .trimmingCharacters(in: .whitespaces)
+            dosage = String(numStr)
+            unit = mapUnit(unitStr.lowercased())
+        }
+
+        return DrugInfo(name: name.capitalized, dosage: dosage, unit: unit, dosageForm: "")
     }
 
     // MARK: - NDC Formatting
