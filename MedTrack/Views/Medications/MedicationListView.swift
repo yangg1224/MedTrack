@@ -9,24 +9,30 @@ struct MedicationListView: View {
     @State private var selectedMedication: Medication?
 
     var body: some View {
-        Group {
-            if medications.isEmpty {
-                ContentUnavailableView(
-                    "No Medications",
-                    systemImage: "pills",
-                    description: Text("Tap + to add your first medication.")
-                )
-            } else {
-                List {
-                    ForEach(medications) { med in
-                        Button {
-                            selectedMedication = med
-                        } label: {
-                            MedicationRowView(medication: med)
+        ZStack {
+            Color.dsBackground.ignoresSafeArea()
+
+            Group {
+                if medications.isEmpty {
+                    ContentUnavailableView(
+                        "No Medications",
+                        systemImage: "pills",
+                        description: Text("Tap + to add your first medication.")
+                    )
+                } else {
+                    List {
+                        ForEach(medications) { med in
+                            Button {
+                                selectedMedication = med
+                            } label: {
+                                MedicationRowView(medication: med)
+                            }
+                            .foregroundStyle(.primary)
+                            .listRowBackground(Color.dsCard)
                         }
-                        .foregroundStyle(.primary)
+                        .onDelete(perform: delete)
                     }
-                    .onDelete(perform: delete)
+                    .scrollContentBackground(.hidden)
                 }
             }
         }
